@@ -11,9 +11,6 @@ pub mod generate {
     }
     #[no_mangle]
     pub fn gen_id(server_id: i32) -> u64 {
-        if (server_id * 3 > random_process_id) {
-            panic!("The serverid times three can not be larger then the process id.");
-        }
         let serverid = server_id as u64;
         // 05/29/2019 @ 7:55am (UTC)
         let custom_epoch = self::base_calc() as u64 - 15591165000000000;
