@@ -1,6 +1,4 @@
 extern crate time;
-use std::thread;
-use durations::{SECOND as S, MILLISECOND as MS};
 
 pub mod generate {
     fn base_calc() -> f64 {
