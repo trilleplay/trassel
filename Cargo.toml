@@ -1,0 +1,14 @@
+[package]
+name = "trassel"
+version = "0.1.0"
+authors = ["Tristan Farkas <tristan@farkas.st>"]
+edition = "2018"
+description = "Unique ID integers that scale."
+categories = ["algorithms"]
+keywords = ["id", "scale"]
+license = "MIT"
+
+[dependencies]
+time = "0.1.42"
+rand = "0.6.5"
+durations = "0.1.1"
