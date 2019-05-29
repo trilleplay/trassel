@@ -7,6 +7,7 @@ description = "Unique ID integers that scale."
 categories = ["algorithms"]
 keywords = ["id", "scale"]
 license = "MIT"
+repository = "https://github.com/trilleplay/trassel.git"
 
 [dependencies]
 time = "0.1.42"
