@@ -7,6 +7,8 @@ pub mod generate {
         let response = mills*10000000.0;
         response
     }
+    /// This function calculates a unique scaleable identifier, simply input a interger thats diffrent for each process/server and this function returns a u64 object.
+    /// This function should not run in paralell with the same server_id is it can cause conflicts.
     #[no_mangle]
     pub fn gen_id(server_id: i32) -> u64 {
         let serverid = server_id as u64;
