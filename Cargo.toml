@@ -1,6 +1,6 @@
 [package]
 name = "trassel"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Tristan Farkas <tristan@farkas.st>"]
 edition = "2018"
 description = "Unique ID integers that scale."
