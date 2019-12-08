@@ -14,9 +14,8 @@ pub mod generate {
         let serverid = server_id as u64;
         // 05/29/2019 @ 7:55am (UTC)
         let custom_epoch = self::base_calc() as u64 - 15591165000000000;
-        let epoch_scale = custom_epoch * 1000;
-        let id = epoch_scale + serverid * serverid * 3;
-        std::thread::sleep(3*durations::MILLISECOND);
+        let id = custom_epoch * 1000;
+        std::thread::sleep(1*durations::MILLISECOND);
         id
     }
 }
