@@ -4,7 +4,7 @@ pub mod generate {
     fn base_calc() -> f64 {
         let init_time = time::get_time();
         let mills: f64 = init_time.sec as f64 + (init_time.nsec as f64 / 1000.0 / 1000.0 / 1000.0);
-        let response = mills*10000000.0;
+        let response = mills*1000.0;
         response
     }
     /// This function calculates a unique scaleable identifier, simply input a interger thats diffrent for each process/server and this function returns a u64 object.
