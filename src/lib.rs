@@ -10,8 +10,7 @@ pub mod generate {
     /// This function calculates a unique scaleable identifier, simply input a interger thats diffrent for each process/server and this function returns a u64 object.
     /// This function should not run in paralell with the same server_id is it can cause conflicts.
     #[no_mangle]
-    pub fn gen_id(server_id: i32) -> u64 {
-        let serverid = server_id as u64;
+    pub fn gen_id() -> u64 {
         // 05/29/2019 @ 7:55am (UTC)
         let custom_epoch = self::base_calc() as u64 - 15591165000000000;
         let id = custom_epoch * 1000;
