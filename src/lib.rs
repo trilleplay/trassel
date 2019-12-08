@@ -12,7 +12,7 @@ pub mod generate {
     #[no_mangle]
     pub fn gen_id() -> u64 {
         // 05/29/2019 @ 7:55am (UTC)
-        let custom_epoch = self::base_calc() as u64 - 15591165000000000;
+        let custom_epoch = self::base_calc() as u64 - 1559116500000;
         let id = custom_epoch * 1000;
         std::thread::sleep(1*durations::MILLISECOND);
         id
