@@ -11,5 +11,4 @@ repository = "https://github.com/trilleplay/trassel.git"
 
 [dependencies]
 time = "0.1.42"
-rand = "0.6.5"
 durations = "0.1.1"
