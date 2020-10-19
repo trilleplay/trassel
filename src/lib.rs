@@ -1,20 +1,67 @@
 extern crate time;
 
 pub mod generate {
-    fn base_calc() -> f64 {
-        let init_time = time::get_time();
-        let mills: f64 = init_time.sec as f64 + (init_time.nsec as f64 / 1000.0 / 1000.0 / 1000.0);
-        let response = mills*1000.0;
-        response
+
+    const TOTAL_BITS: i64 = 64;
+    const EPOCH_BITS: i64 = 42;
+    const SEQUENCE_BITS: i64 = 12;
+    const NODE_ID_BITS: i64 = 10;
+
+    pub struct Factory {
+        seq: i64,
+        time: i64,
+        max_seq: i64,
+        node_id: i64,
+        epoch: f64
     }
-    /// This function calculates a unique scaleable identifier, simply input a interger thats diffrent for each process/server and this function returns a u64 object.
-    /// This function should not run in paralell with the same server_id is it can cause conflicts.
-    #[no_mangle]
-    pub fn gen_id() -> u64 {
-        // 05/29/2019 @ 7:55am (UTC)
-        let custom_epoch = self::base_calc() as u64 - 1559116500000;
-        let id = custom_epoch * 1000;
-        std::thread::sleep(1*durations::MILLISECOND);
-        id
+
+    impl Factory {
+
+        /// Use the stored struct to generate a unique id
+        pub fn generate(&mut self) -> i64 {
+            let mut current_time_stamp = get_timestamp(self.epoch);
+            if current_time_stamp == self.time {
+                self.seq = (self.seq + 1) & self.max_seq;
+                if self.seq == 0 {
+                    while self.time == current_time_stamp {
+                        current_time_stamp = get_timestamp(self.epoch);
+                    }
+                }
+            }
+            else {
+                self.seq = 0
+            }
+            self.time = get_timestamp(self.epoch);
+            let mut id = self.time << (TOTAL_BITS - EPOCH_BITS);
+            id = id | (self.node_id << (TOTAL_BITS - EPOCH_BITS - NODE_ID_BITS));
+            id = id | self.seq;
+            return id
+        }
+
+
+    }
+
+    fn get_timestamp(epoch: f64) -> i64 {
+        let init_time = time::get_time();
+        return ((init_time.sec as f64 + (init_time.nsec/1000000000) as f64)*1000.0 - epoch) as i64;
+    }
+
+    /// Get a Factory struct which you can use to generate IDs.
+    pub fn get_factory(node_id: i64, epoch: f64) -> Result<Factory, String> {
+        if node_id.is_negative() {
+            return Err("The node_id field can't be negative.".to_string())
+        }
+        let max_sequence = ((2 as i64).pow(SEQUENCE_BITS as u32))-1;
+        if node_id > max_sequence {
+            return Err("The specified node_id is invalid.".to_string())
+        }
+        let f = Factory {
+            seq: 0,
+            time: 0,
+            max_seq: max_sequence,
+            node_id,
+            epoch
+        };
+        return Ok(f)
     }
 }
